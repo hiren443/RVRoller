@@ -9,6 +9,11 @@
 #import "RVViewContrller.h"
 #import "RVContentView.h"
 
+@interface RVViewContrller()
+<RVContentViewDelegate>
+
+@end
+
 @implementation RVViewContrller 
 
 @synthesize viewControllers = _viewControllers, index = _index;
@@ -18,6 +23,7 @@
 - (void)loadView
 {
    self.view = _contentView = [[RVContentView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    _contentView.delegate = self;
 }
 
 - (void)setViewControllers:(NSArray *)viewControllers
@@ -44,6 +50,11 @@
 {
     _index = index;
     
+}
+
+- (UIView*)contentView:(RVContentView *)view contentAtIndex:(NSInteger)index
+{
+    return [[_viewControllers objectAtIndex:index] view];
 }
 
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18A25722159CC3880029BC92 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A25721159CC3880029BC92 /* QuartzCore.framework */; };
 		5F4B23CE159C60A500AFBAFD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F4B23CD159C60A500AFBAFD /* UIKit.framework */; };
 		5F4B23D0159C60A500AFBAFD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F4B23CF159C60A500AFBAFD /* Foundation.framework */; };
 		5F4B23D2159C60A500AFBAFD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F4B23D1159C60A500AFBAFD /* CoreGraphics.framework */; };
@@ -27,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		18A25721159CC3880029BC92 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5F4B23C9159C60A500AFBAFD /* rollViewContrller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rollViewContrller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F4B23CD159C60A500AFBAFD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5F4B23CF159C60A500AFBAFD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -45,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18A25722159CC3880029BC92 /* QuartzCore.framework in Frameworks */,
 				5F4B2419159C734200AFBAFD /* libRVViewContrller.a in Frameworks */,
 				5F4B23CE159C60A500AFBAFD /* UIKit.framework in Frameworks */,
 				5F4B23D0159C60A500AFBAFD /* Foundation.framework in Frameworks */,
@@ -75,6 +78,7 @@
 		5F4B23CC159C60A500AFBAFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				18A25721159CC3880029BC92 /* QuartzCore.framework */,
 				5F4B23CD159C60A500AFBAFD /* UIKit.framework */,
 				5F4B23CF159C60A500AFBAFD /* Foundation.framework */,
 				5F4B23D1159C60A500AFBAFD /* CoreGraphics.framework */,
@@ -268,6 +272,7 @@
 				GCC_PREFIX_HEADER = "rollViewContrller/rollViewContrller-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/rollViewContrller/RollerViewCnotrller/RVViewContrller/RVViewContrller\"";
 				INFOPLIST_FILE = "rollViewContrller/rollViewContrller-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -280,6 +285,7 @@
 				GCC_PREFIX_HEADER = "rollViewContrller/rollViewContrller-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/rollViewContrller/RollerViewCnotrller/RVViewContrller/RVViewContrller\"";
 				INFOPLIST_FILE = "rollViewContrller/rollViewContrller-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -304,6 +310,7 @@
 				5F4B23E9159C60A500AFBAFD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

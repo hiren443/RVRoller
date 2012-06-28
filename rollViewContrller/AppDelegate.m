@@ -24,18 +24,22 @@
     NSMutableArray *viewControllers = [NSMutableArray array];
     UIViewController *ctrl = [[UIViewController alloc] init];
     ctrl.title = @"1号";
+    ctrl.view.backgroundColor = [UIColor redColor];
     [viewControllers addObject:ctrl];
     
     ctrl = [[UIViewController alloc] init];
     ctrl.title = @"2号";
+    ctrl.view.backgroundColor = [UIColor blueColor];
     [viewControllers addObject:ctrl];
     
     ctrl = [[UIViewController alloc] init];
     ctrl.title = @"3号";
+    ctrl.view.backgroundColor = [UIColor yellowColor];
     [viewControllers addObject:ctrl];
     
     ctrl = [[UIViewController alloc] init];
     ctrl.title = @"4号";
+    ctrl.view.backgroundColor = [UIColor blackColor];
     [viewControllers addObject:ctrl];
     
     [self.viewController setViewControllers:viewControllers

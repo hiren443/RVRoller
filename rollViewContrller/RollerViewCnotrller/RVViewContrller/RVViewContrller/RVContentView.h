@@ -14,13 +14,17 @@
 
 @property (nonatomic, assign)   id<RVContentViewDelegate>  delegate;
 
-@property (nonatomic, strong)   NSArray *titles;
 - (void)setTitles:(NSArray *)titles animated:(BOOL)animated;
 
-@property (nonatomic, strong)   UIFont  *font;
+@property (nonatomic, strong)   NSArray     *titles;
+@property (nonatomic, strong)   UIFont      *font;
 @property (nonatomic, assign)   NSInteger   index;
+@property (nonatomic, assign)   CGFloat     spacing;
 
 - (void)setIndex:(NSInteger)index animated:(BOOL)animated;
+
+- (void)nextPage;
+- (void)prevPage;
 
 @end
 
