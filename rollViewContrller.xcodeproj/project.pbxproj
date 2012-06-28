@@ -1,0 +1,311 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5F4B23CE159C60A500AFBAFD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F4B23CD159C60A500AFBAFD /* UIKit.framework */; };
+		5F4B23D0159C60A500AFBAFD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F4B23CF159C60A500AFBAFD /* Foundation.framework */; };
+		5F4B23D2159C60A500AFBAFD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F4B23D1159C60A500AFBAFD /* CoreGraphics.framework */; };
+		5F4B23D8159C60A500AFBAFD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5F4B23D6159C60A500AFBAFD /* InfoPlist.strings */; };
+		5F4B23DA159C60A500AFBAFD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4B23D9159C60A500AFBAFD /* main.m */; };
+		5F4B23DE159C60A500AFBAFD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4B23DD159C60A500AFBAFD /* AppDelegate.m */; };
+		5F4B2419159C734200AFBAFD /* libRVViewContrller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F4B240E159C63C100AFBAFD /* libRVViewContrller.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5F4B240D159C63C100AFBAFD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5F4B2409159C63C000AFBAFD /* RVViewContrller.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5F4B23F9159C63C000AFBAFD;
+			remoteInfo = RVViewContrller;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		5F4B23C9159C60A500AFBAFD /* rollViewContrller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rollViewContrller.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F4B23CD159C60A500AFBAFD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		5F4B23CF159C60A500AFBAFD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		5F4B23D1159C60A500AFBAFD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		5F4B23D5159C60A500AFBAFD /* rollViewContrller-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "rollViewContrller-Info.plist"; sourceTree = "<group>"; };
+		5F4B23D7159C60A500AFBAFD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5F4B23D9159C60A500AFBAFD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5F4B23DB159C60A500AFBAFD /* rollViewContrller-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "rollViewContrller-Prefix.pch"; sourceTree = "<group>"; };
+		5F4B23DC159C60A500AFBAFD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		5F4B23DD159C60A500AFBAFD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		5F4B2409159C63C000AFBAFD /* RVViewContrller.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RVViewContrller.xcodeproj; path = RVViewContrller/RVViewContrller.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5F4B23C6159C60A500AFBAFD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F4B2419159C734200AFBAFD /* libRVViewContrller.a in Frameworks */,
+				5F4B23CE159C60A500AFBAFD /* UIKit.framework in Frameworks */,
+				5F4B23D0159C60A500AFBAFD /* Foundation.framework in Frameworks */,
+				5F4B23D2159C60A500AFBAFD /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5F4B23BE159C60A500AFBAFD = {
+			isa = PBXGroup;
+			children = (
+				5F4B23D3159C60A500AFBAFD /* rollViewContrller */,
+				5F4B23CC159C60A500AFBAFD /* Frameworks */,
+				5F4B23CA159C60A500AFBAFD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5F4B23CA159C60A500AFBAFD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5F4B23C9159C60A500AFBAFD /* rollViewContrller.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5F4B23CC159C60A500AFBAFD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5F4B23CD159C60A500AFBAFD /* UIKit.framework */,
+				5F4B23CF159C60A500AFBAFD /* Foundation.framework */,
+				5F4B23D1159C60A500AFBAFD /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5F4B23D3159C60A500AFBAFD /* rollViewContrller */ = {
+			isa = PBXGroup;
+			children = (
+				5F4B23EA159C621800AFBAFD /* RollerViewCnotrller */,
+				5F4B23DC159C60A500AFBAFD /* AppDelegate.h */,
+				5F4B23DD159C60A500AFBAFD /* AppDelegate.m */,
+				5F4B23D4159C60A500AFBAFD /* Supporting Files */,
+			);
+			path = rollViewContrller;
+			sourceTree = "<group>";
+		};
+		5F4B23D4159C60A500AFBAFD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5F4B23D5159C60A500AFBAFD /* rollViewContrller-Info.plist */,
+				5F4B23D6159C60A500AFBAFD /* InfoPlist.strings */,
+				5F4B23D9159C60A500AFBAFD /* main.m */,
+				5F4B23DB159C60A500AFBAFD /* rollViewContrller-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5F4B23EA159C621800AFBAFD /* RollerViewCnotrller */ = {
+			isa = PBXGroup;
+			children = (
+				5F4B2409159C63C000AFBAFD /* RVViewContrller.xcodeproj */,
+			);
+			path = RollerViewCnotrller;
+			sourceTree = "<group>";
+		};
+		5F4B240A159C63C000AFBAFD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5F4B240E159C63C100AFBAFD /* libRVViewContrller.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5F4B23C8159C60A500AFBAFD /* rollViewContrller */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5F4B23E7159C60A500AFBAFD /* Build configuration list for PBXNativeTarget "rollViewContrller" */;
+			buildPhases = (
+				5F4B23C5159C60A500AFBAFD /* Sources */,
+				5F4B23C6159C60A500AFBAFD /* Frameworks */,
+				5F4B23C7159C60A500AFBAFD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = rollViewContrller;
+			productName = rollViewContrller;
+			productReference = 5F4B23C9159C60A500AFBAFD /* rollViewContrller.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5F4B23C0159C60A500AFBAFD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = 5F4B23C3159C60A500AFBAFD /* Build configuration list for PBXProject "rollViewContrller" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 5F4B23BE159C60A500AFBAFD;
+			productRefGroup = 5F4B23CA159C60A500AFBAFD /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 5F4B240A159C63C000AFBAFD /* Products */;
+					ProjectRef = 5F4B2409159C63C000AFBAFD /* RVViewContrller.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				5F4B23C8159C60A500AFBAFD /* rollViewContrller */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		5F4B240E159C63C100AFBAFD /* libRVViewContrller.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRVViewContrller.a;
+			remoteRef = 5F4B240D159C63C100AFBAFD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5F4B23C7159C60A500AFBAFD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F4B23D8159C60A500AFBAFD /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5F4B23C5159C60A500AFBAFD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F4B23DA159C60A500AFBAFD /* main.m in Sources */,
+				5F4B23DE159C60A500AFBAFD /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		5F4B23D6159C60A500AFBAFD /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5F4B23D7159C60A500AFBAFD /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5F4B23E5159C60A500AFBAFD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		5F4B23E6159C60A500AFBAFD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5F4B23E8159C60A500AFBAFD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "rollViewContrller/rollViewContrller-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/rollViewContrller/RollerViewCnotrller/RVViewContrller/RVViewContrller\"";
+				INFOPLIST_FILE = "rollViewContrller/rollViewContrller-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		5F4B23E9159C60A500AFBAFD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "rollViewContrller/rollViewContrller-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/rollViewContrller/RollerViewCnotrller/RVViewContrller/RVViewContrller\"";
+				INFOPLIST_FILE = "rollViewContrller/rollViewContrller-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5F4B23C3159C60A500AFBAFD /* Build configuration list for PBXProject "rollViewContrller" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F4B23E5159C60A500AFBAFD /* Debug */,
+				5F4B23E6159C60A500AFBAFD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5F4B23E7159C60A500AFBAFD /* Build configuration list for PBXNativeTarget "rollViewContrller" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F4B23E8159C60A500AFBAFD /* Debug */,
+				5F4B23E9159C60A500AFBAFD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5F4B23C0159C60A500AFBAFD /* Project object */;
+}
