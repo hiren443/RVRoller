@@ -18,8 +18,11 @@
 
 @property (nonatomic, strong)   NSArray     *titles;
 @property (nonatomic, strong)   UIFont      *font;
+@property (nonatomic, strong)   UIColor     *headerTextColor;
 @property (nonatomic, assign)   NSInteger   index;
 @property (nonatomic, assign)   CGFloat     spacing;
+@property (nonatomic, strong)   UIColor     *headrColor;
+@property (nonatomic, assign)   CGFloat     headerHeight;
 
 - (void)setIndex:(NSInteger)index animated:(BOOL)animated;
 

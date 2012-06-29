@@ -22,6 +22,7 @@
     // Override point for customization after application launch.
     self.viewController = [[RVViewContrller alloc] init];
     self.viewController.contentView.spacing = 45;
+    self.viewController.contentView.headrColor = [UIColor redColor];
     
     [self setViewShow:1];
     

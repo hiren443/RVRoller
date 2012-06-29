@@ -43,6 +43,7 @@
     UIView          *_whiteView1,
                     *_whiteView2,
                     *_contentView;
+    CALayer         *_blackLayer;
     NSTimeInterval  _startTime;
     __unsafe_unretained UIView  *_leftView,
                                 *_rightView,
@@ -52,23 +53,29 @@
 
 @synthesize titles = _titles, font = _font;
 @synthesize delegate = _delegate, index = _index;
-@synthesize spacing = _spacing;
+@synthesize spacing = _spacing, headrColor = _headrColor;
+@synthesize headerTextColor = _headerTextColor;
+@synthesize headerHeight = _headerHeight;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        _headerHeight = kHeightOfTitle;
         _titleScrollView = [[UIScrollView alloc] initWithFrame:
-                            CGRectMake(0, 0, frame.size.width, kHeightOfTitle)];
+                            CGRectMake(0, 0, frame.size.width, _headerHeight)];
         [self addSubview:_titleScrollView];
         
         _indexes = [NSMutableArray new];
         
+        _headrColor = [UIColor blackColor];
+        _headerTextColor = [UIColor whiteColor];
+        
         _titleScrollView.showsVerticalScrollIndicator = NO;
         _titleScrollView.showsHorizontalScrollIndicator = NO;
         _titleScrollView.delegate = self;
-        _titleScrollView.backgroundColor = [UIColor blackColor];
+        _titleScrollView.backgroundColor = _headrColor;
         _titleScrollView.contentInset = UIEdgeInsetsMake(0, frame.size.width / 2,
                                                          0, frame.size.width / 2);
         _titleScrollView.decelerationRate = 20;
@@ -77,7 +84,7 @@
         _font = [UIFont boldSystemFontOfSize:13];
         _spacing = 45;
         
-        _contentView = [[UIView alloc] initWithFrame:CGRectMake(0, kHeightOfTitle, frame.size.width, frame.size.height - kHeightOfTitle)];
+        _contentView = [[UIView alloc] initWithFrame:CGRectMake(0, _headerHeight, frame.size.width, frame.size.height - _headerHeight)];
         [self insertSubview:_contentView belowSubview:_titleScrollView];
         _whiteView1 = [[UIView alloc] initWithFrame:(CGRect){0, 0, frame.size}];
         UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -95,11 +102,11 @@
         CALayer *mask = [CALayer layer];
         mask.contents = (id)[UIImage imageNamed:@"rv_mask"].CGImage;
         mask.frame = CGRectMake(0, 0, 320, 25);
-        CALayer *blackLayer = [CALayer layer];
-        blackLayer.frame = _titleScrollView.frame;
-        blackLayer.backgroundColor = [UIColor blackColor].CGColor;
-        [self.layer addSublayer:blackLayer];
-        blackLayer.mask = mask;
+        _blackLayer = [CALayer layer];
+        _blackLayer.frame = _titleScrollView.frame;
+        _blackLayer.backgroundColor = _headrColor.CGColor;
+        [self.layer addSublayer:_blackLayer];
+        _blackLayer.mask = mask;
     }
     return self;
 }
@@ -107,11 +114,13 @@
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
-    _titleScrollView.frame = CGRectMake(0, 0, frame.size.width, 25);
+    _blackLayer.frame = _titleScrollView.frame =
+                CGRectMake(0, 0, frame.size.width, 25);
     _titleScrollView.contentInset = UIEdgeInsetsMake(0, frame.size.width / 2 - 1,
                                                      0, frame.size.width / 2 - 1);
     
-    _contentView.frame = CGRectMake(0, kHeightOfTitle, frame.size.width, frame.size.height - kHeightOfTitle);
+    _contentView.frame = CGRectMake(0, _headerHeight, frame.size.width, 
+                                    frame.size.height - _headerHeight);
     _whiteView2.bounds = _whiteView1.bounds = (CGRect){0, 0, frame.size};
 }
 
@@ -124,11 +133,14 @@
 }
 */
 
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     [self _showAtPage];
 }
+
+#pragma mark - setters
 
 - (void)setIndex:(NSInteger)index
 {
@@ -170,6 +182,45 @@
         [self setTitlesWithOldCount:count];
         [self _setIndexAnimated:animated];
         [self _showAtPage];
+    }
+}
+
+- (void)setHeadrColor:(UIColor *)headrColor
+{
+    _headrColor = headrColor;
+    _blackLayer.backgroundColor = [headrColor CGColor];
+    _titleScrollView.backgroundColor = headrColor;
+}
+
+- (void)setHeaderTextColor:(UIColor *)headerTextColor
+{
+    for (int n = 0, t = [_titles count]; n < t; n ++) {
+        UIButton *button = (id)[_titleScrollView viewWithTag:TempCount(n)];
+        [button setTitleColor:headerTextColor
+                     forState:UIControlStateNormal];
+        [button setTitleColor:[headerTextColor colorWithAlphaComponent:0.8]
+                     forState:UIControlStateHighlighted];
+    }
+    _headerTextColor = headerTextColor;
+}
+
+- (void)setHeaderHeight:(CGFloat)headerHeight
+{
+    _headerHeight = headerHeight;
+    
+    CGRect frame = self.frame;
+    _blackLayer.frame = _titleScrollView.frame =
+            CGRectMake(0, 0, frame.size.width, 25);
+    
+    _contentView.frame = CGRectMake(0, _headerHeight, frame.size.width, 
+                                    frame.size.height - _headerHeight);
+    _whiteView2.bounds = _whiteView1.bounds = (CGRect){0, 0, frame.size};
+    
+    for (int n = 0, t = [_titles count]; n < t; n ++) {
+        UIButton *button = (id)[_titleScrollView viewWithTag:TempCount(n)];
+        CGRect rect = button.frame;
+        rect.size.height = _headerHeight;
+        button.frame = rect;
     }
 }
 
@@ -230,6 +281,10 @@
         [button addTarget:self
                    action:@selector(clickAtButton:)
          forControlEvents:UIControlEventTouchUpInside];
+        [button setTitleColor:_headerTextColor
+                     forState:UIControlStateNormal];
+        [button setTitleColor:[_headerTextColor colorWithAlphaComponent:0.8]
+                     forState:UIControlStateHighlighted];
         
         // set for next
         if (n == 0) {
@@ -254,6 +309,7 @@
 - (void)setIndex:(NSInteger)index animated:(BOOL)animated
 {
     if (_index == index) {
+        [self _setIndexAnimated:animated];
         return;
     }
     if (animated) {
