@@ -12,20 +12,30 @@
 
 @interface RVContentView : UIView
 
+//if using RVViewController pealse ignore it.
 @property (nonatomic, assign)   id<RVContentViewDelegate>  delegate;
 
+// set titles
+@property (nonatomic, strong)   NSArray     *titles;
 - (void)setTitles:(NSArray *)titles animated:(BOOL)animated;
 
-@property (nonatomic, strong)   NSArray     *titles;
+// the font of titles in header 
 @property (nonatomic, strong)   UIFont      *font;
+// the color of titles
 @property (nonatomic, strong)   UIColor     *headerTextColor;
-@property (nonatomic, assign)   NSInteger   index;
+
+// spacing of each title
 @property (nonatomic, assign)   CGFloat     spacing;
+// the backgroud color of header
 @property (nonatomic, strong)   UIColor     *headrColor;
+// the height of the header.
 @property (nonatomic, assign)   CGFloat     headerHeight;
 
+// now whitch view controller is selected?
+@property (nonatomic, assign)   NSInteger   index;
 - (void)setIndex:(NSInteger)index animated:(BOOL)animated;
 
+// one page flip.
 - (void)nextPage;
 - (void)prevPage;
 
