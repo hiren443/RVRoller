@@ -23,6 +23,7 @@
 		5F4B240F159C64F700AFBAFD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5F4B2415159C68E500AFBAFD /* RVContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RVContentView.h; sourceTree = "<group>"; };
 		5F4B2416159C68E500AFBAFD /* RVContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RVContentView.m; sourceTree = "<group>"; };
+		5F4B2424159D526600AFBAFD /* rv_mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rv_mask.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +73,7 @@
 				5F4B23FF159C63C000AFBAFD /* Supporting Files */,
 				5F4B2415159C68E500AFBAFD /* RVContentView.h */,
 				5F4B2416159C68E500AFBAFD /* RVContentView.m */,
+				5F4B2424159D526600AFBAFD /* rv_mask.png */,
 			);
 			path = RVViewContrller;
 			sourceTree = "<group>";
@@ -238,6 +240,7 @@
 				5F4B2408159C63C000AFBAFD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

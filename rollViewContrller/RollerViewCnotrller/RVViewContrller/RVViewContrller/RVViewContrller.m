@@ -16,7 +16,7 @@
 
 @implementation RVViewContrller 
 
-@synthesize viewControllers = _viewControllers, index = _index;
+@synthesize viewControllers = _viewControllers;
 @synthesize contentView = _contentView;
 
 
@@ -46,10 +46,12 @@
     [_contentView setTitles:array animated:animated];
 }
 
-- (void)setIndex:(NSInteger)index
+- (RVContentView*)contentView
 {
-    _index = index;
-    
+    if (!_contentView) {
+        [self view];
+    }
+    return _contentView;
 }
 
 - (UIView*)contentView:(RVContentView *)view contentAtIndex:(NSInteger)index

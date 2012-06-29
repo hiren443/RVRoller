@@ -13,6 +13,25 @@
 #define ShowCount(count)    (0xff0fffff&count)
 #define kHeightOfTitle      25
 
+@interface UILabel(RVView)
+
+- (void)setUp;
+
+@end
+
+@implementation UILabel(RVView)
+
+- (void)setUp
+{
+    self.font = [UIFont boldSystemFontOfSize:30];
+    self.textColor = [UIColor grayColor];
+    self.shadowColor = [UIColor colorWithWhite:0.9 alpha:1];
+    self.shadowOffset =CGSizeMake(1, 3);
+    self.textAlignment = UITextAlignmentCenter;
+}
+
+@end
+
 @interface RVContentView()
 <UIScrollViewDelegate>
 
@@ -24,6 +43,7 @@
     UIView          *_whiteView1,
                     *_whiteView2,
                     *_contentView;
+    NSTimeInterval  _startTime;
     __unsafe_unretained UIView  *_leftView,
                                 *_rightView,
                                 *_nowView;
@@ -51,6 +71,7 @@
         _titleScrollView.backgroundColor = [UIColor blackColor];
         _titleScrollView.contentInset = UIEdgeInsetsMake(0, frame.size.width / 2,
                                                          0, frame.size.width / 2);
+        _titleScrollView.decelerationRate = 20;
         self.backgroundColor = [UIColor whiteColor];
         
         _font = [UIFont boldSystemFontOfSize:13];
@@ -59,11 +80,26 @@
         _contentView = [[UIView alloc] initWithFrame:CGRectMake(0, kHeightOfTitle, frame.size.width, frame.size.height - kHeightOfTitle)];
         [self insertSubview:_contentView belowSubview:_titleScrollView];
         _whiteView1 = [[UIView alloc] initWithFrame:(CGRect){0, 0, frame.size}];
-        _whiteView2 = [[UIView alloc] initWithFrame:(CGRect){0, 0, frame.size}];
+        UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        activity.center = CGPointMake(frame.size.width/2, frame.size.height/2);
+        [activity startAnimating];
+        [_whiteView1 addSubview:activity];
+        _whiteView2 = [[UIView alloc] initWithFrame:(CGRect){0, 0, frame.size}];activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        activity.center = CGPointMake(frame.size.width/2, frame.size.height/2);
+        [_whiteView2 addSubview:activity];
+        [activity startAnimating];
         
         _pan = [[UIPanGestureRecognizer alloc] initWithTarget:self
                                                        action:@selector(panedOn:)];
         [_contentView addGestureRecognizer:_pan];
+        CALayer *mask = [CALayer layer];
+        mask.contents = (id)[UIImage imageNamed:@"rv_mask"].CGImage;
+        mask.frame = CGRectMake(0, 0, 320, 25);
+        CALayer *blackLayer = [CALayer layer];
+        blackLayer.frame = _titleScrollView.frame;
+        blackLayer.backgroundColor = [UIColor blackColor].CGColor;
+        [self.layer addSublayer:blackLayer];
+        blackLayer.mask = mask;
     }
     return self;
 }
@@ -130,6 +166,7 @@
     }
 }
 
+
 - (void)setTitlesWithOldCount:(NSInteger)count
 {
     for (int n = 0; n < count; n ++) {
@@ -145,7 +182,6 @@
     for (int n = 0; n < total; n ++) {
         
         NSString *title = [_titles objectAtIndex:n];
-        [_indexes addObject:[NSNumber numberWithFloat:fv]];
         CGSize size = [title sizeWithFont:_font
                         constrainedToSize:CGSizeMake(MAXFLOAT, 25)];
         
@@ -162,7 +198,6 @@
 //        [_titleScrollView addSubview:label];
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(fv , 0, size.width, 25);
         [button setTitle:title
                 forState:UIControlStateNormal];
         button.titleLabel.font = _font;
@@ -173,11 +208,17 @@
          forControlEvents:UIControlEventTouchUpInside];
         
         // set for next
-        fv += size.width / 2 + _spacing + upper / 2;
+        if (n == 0) {
+            [_indexes addObject:[NSNumber numberWithFloat:0.0f]];
+        }else {
+            fv += size.width / 2 + _spacing + upper / 2;
+            [_indexes addObject:[NSNumber numberWithFloat:fv]];
+        }
+        button.frame = CGRectMake(fv - size.width / 2 , 0, size.width, 25);
         upper = size.width;
     }
     
-    _titleScrollView.contentSize = CGSizeMake(fv - upper / 2, 0);
+    _titleScrollView.contentSize = CGSizeMake(fv , 0);
 }
          
 - (void)clickAtButton:(UIButton*)sender
@@ -216,9 +257,11 @@
         NSMutableArray *array = [NSMutableArray array];
         CGRect rect = _contentView.bounds;
         for (int n = index; n > _index; n--) {
-            UIView *view = [[UIView alloc] initWithFrame:(CGRect){rect.size.width * (index - _index), 0, rect.size}];
-            [array addObject:view];
-            [_contentView addSubview:view];
+            UILabel *label = [[UILabel alloc] initWithFrame:(CGRect){rect.size.width * (index - _index), 0, rect.size}];
+            [label setUp];
+            label.text = [_titles objectAtIndex:n];
+            [array addObject:label];
+            [_contentView addSubview:label];
         }
         [UIView animateWithDuration:0.5
                          animations:^
@@ -243,9 +286,11 @@
         NSMutableArray *array = [NSMutableArray array];
         CGRect rect = _contentView.bounds;
         for (int n = index; n < _index; n++) {
-            UIView *view = [[UIView alloc] initWithFrame:(CGRect){rect.size.width * (index - _index), 0, rect.size}];
-            [array addObject:view];
-            [_contentView addSubview:view];
+            UILabel *label = [[UILabel alloc] initWithFrame:(CGRect){rect.size.width * (index - _index), 0, rect.size}];
+            [label setUp];
+            label.text = [_titles objectAtIndex:n];
+            [array addObject:label];
+            [_contentView addSubview:label];
         }
         [UIView animateWithDuration:0.5
                          animations:^
@@ -270,8 +315,13 @@
 
 - (void)_setIndexAnimated:(BOOL)animated
 {
-    CGFloat left = [[_indexes objectAtIndex:_index] floatValue] - self.bounds.size.width / 2 + 16;
-    [_titleScrollView setContentOffset:CGPointMake(left, 0) animated:animated];
+    CGFloat left = [[_indexes objectAtIndex:_index] floatValue];
+    [self _setTitleScrollViewLeft:left :animated];
+}
+
+- (void)_setTitleScrollViewLeft:(CGFloat)f :(BOOL)animated
+{
+    [_titleScrollView setContentOffset:CGPointMake(f - _contentView.bounds.size.width/2, 0) animated:animated];
 }
 
 - (void)_showAtPage
@@ -286,22 +336,25 @@
     CGRect rect = self.bounds;
     _nowView = [_delegate contentView:self contentAtIndex:_index];
     _nowView.frame = (CGRect){0,0,rect.size};
-    _leftView = _whiteView1;
-    _leftView.frame = (CGRect){-rect.size.width,0,rect.size};
-    _rightView = _whiteView2;
-    _rightView.frame = (CGRect){rect.size.width,0,rect.size};
     [_contentView addSubview:_nowView];
-    [_contentView addSubview:_leftView];
-    [_contentView addSubview:_rightView];
+    if (_index > 0) {
+        _leftView = _whiteView1;
+        _leftView.frame = (CGRect){-rect.size.width,0,rect.size};
+        [_contentView addSubview:_leftView];
+    }else _leftView = nil;
+    if (_index < [_titles count] - 1) {
+        _rightView = _whiteView2;
+        _rightView.frame = (CGRect){rect.size.width,0,rect.size};
+        [_contentView addSubview:_rightView];
+    }else _rightView = nil;
 }
 
 - (void)_checkAndSet
 {
-    CGFloat left = _titleScrollView.contentOffset.x + self.bounds.size.width / 2 - _spacing - 16;
+    CGFloat left = _titleScrollView.contentOffset.x + self.bounds.size.width / 2;
     for (int n = 0, t = _indexes.count; n < t;n++) {
         NSNumber *num = [_indexes objectAtIndex:n];
         CGFloat f = [num floatValue];
-        NSLog(@"%f", f);
         if (f>left) {
             if (n > 0) {
                 CGFloat f2 = [[_indexes objectAtIndex:n - 1] floatValue];
@@ -313,7 +366,7 @@
             }else {
                 [self setIndex:0 animated:YES];
             }
-    break;
+            break;
         }
         if (n == t - 1) {
             [self setIndex:t - 1 animated:YES];
@@ -325,34 +378,65 @@
 
 - (void)prevPage
 {
-    CGRect rect = self.bounds;
-    _index --;
+    CGRect rect = _contentView.bounds;
+    if (_index > 0) {
+        _index --;
+        [UIView animateWithDuration:0.3
+                         animations:^
+         {
+             _leftView.frame = (CGRect){0,0,rect.size};
+             _nowView.frame = (CGRect){rect.size.width,0,rect.size};
+             _rightView.frame = (CGRect){2*rect.size.width,0,rect.size};
+         } completion:^(BOOL finished) 
+         {
+             [self _showAtPage];
+         }];
+    }else {
+        [self turnBack];
+    }
+}
+
+- (void)nextPage
+{
+    if (_index < [_titles count] - 1) {
+        CGRect rect = _contentView.bounds;
+        _index ++;
+        [UIView animateWithDuration:0.3
+                         animations:^
+         {
+             _leftView.frame = (CGRect){-2*rect.size.width,0,rect.size};
+             _nowView.frame = (CGRect){-rect.size.width,0,rect.size};
+             _rightView.frame = (CGRect){0,0,rect.size};
+         } completion:^(BOOL finished) 
+         {
+             [self _showAtPage];
+         }];
+    }else {
+        [self turnBack];
+    }
+}
+
+- (void)turnBack
+{
+    CGRect rect = _contentView.bounds;
     [UIView animateWithDuration:0.3
                      animations:^
      {
-         _leftView.frame = (CGRect){0,0,rect.size};
-         _nowView.frame = (CGRect){rect.size.width,0,rect.size};
-         _rightView.frame = (CGRect){2*rect.size.width,0,rect.size};
+         _leftView.frame = (CGRect){-rect.size.width,0,rect.size};
+         _nowView.frame = (CGRect){0,0,rect.size};
+         _rightView.frame = (CGRect){rect.size.width,0,rect.size};
      } completion:^(BOOL finished) 
      {
          [self _showAtPage];
      }];
 }
 
-- (void)nextPage
+- (void)_setOLeft:(CGFloat)f
 {
-    CGRect rect = self.bounds;
-    _index ++;
-    [UIView animateWithDuration:0.3
-                     animations:^
-     {
-         _leftView.frame = (CGRect){-2*rect.size.width,0,rect.size};
-         _nowView.frame = (CGRect){-rect.size.width,0,rect.size};
-         _rightView.frame = (CGRect){0,0,rect.size};
-     } completion:^(BOOL finished) 
-     {
-         [self _showAtPage];
-     }];
+    CGRect rect = _contentView.bounds;
+    _leftView.frame = (CGRect){f-rect.size.width,0,rect.size};
+    _nowView.frame = (CGRect){f,0,rect.size};
+    _rightView.frame = (CGRect){f+rect.size.width,0,rect.size};
 }
 
 #pragma mark - recongnizer
@@ -360,7 +444,41 @@
 - (void)panedOn:(UIPanGestureRecognizer*)sender
 {
     CGPoint p = [sender translationInView:_contentView];
+    int state = sender.state;
+    if ((_index > 0 || p.x < 0) && (_index < [_indexes count] - 1 || p.x > 0)) {
+        CGFloat percent = p.x / _contentView.bounds.size.width;
+        CGFloat f1,f2;
+        if (percent < 0) {
+            f1 = [[_indexes objectAtIndex:_index] floatValue];
+            f2 = [[_indexes objectAtIndex:_index + 1] floatValue];
+        }else {
+            f1 = [[_indexes objectAtIndex:_index] floatValue];
+            f2 = [[_indexes objectAtIndex:_index - 1] floatValue];
+        }
+        percent = percent<0?-percent:percent;
+        [self _setTitleScrollViewLeft:f2*percent + f1*(1-percent) :NO];
+        [self _setOLeft:p.x];
+    }else {
+        [self _setIndexAnimated:NO];
+        [self _setOLeft:p.x / 2];
+    }
     
+    
+    if (state == UIGestureRecognizerStateBegan) {
+        _startTime = [[sender valueForKey:@"_lastTouchTime"] floatValue];
+    }else if (state == UIGestureRecognizerStateCancelled ||
+              state == UIGestureRecognizerStateFailed ||
+              state == UIGestureRecognizerStateEnded) {
+        NSTimeInterval interval = [[sender valueForKey:@"_lastTouchTime"] floatValue] - _startTime;
+        if ((interval < 0.2f && p.x > 0.0f) || p.x > 40.0f) {
+            [self prevPage];
+        }else if ((interval < 0.2f && p.x < 0.0f) || p.x < -40.0f) {
+            [self nextPage];
+        }else {
+            [self turnBack];
+        }
+        [self _setIndexAnimated:YES];
+    }
 }
 
 #pragma mark - scrollView delegate

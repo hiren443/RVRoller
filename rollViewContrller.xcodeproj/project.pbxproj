@@ -15,6 +15,7 @@
 		5F4B23DA159C60A500AFBAFD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4B23D9159C60A500AFBAFD /* main.m */; };
 		5F4B23DE159C60A500AFBAFD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4B23DD159C60A500AFBAFD /* AppDelegate.m */; };
 		5F4B2419159C734200AFBAFD /* libRVViewContrller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F4B240E159C63C100AFBAFD /* libRVViewContrller.a */; };
+		5F4B2427159D539400AFBAFD /* rv_mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F4B2426159D539400AFBAFD /* rv_mask.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		5F4B23DC159C60A500AFBAFD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5F4B23DD159C60A500AFBAFD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5F4B2409159C63C000AFBAFD /* RVViewContrller.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RVViewContrller.xcodeproj; path = RVViewContrller/RVViewContrller.xcodeproj; sourceTree = "<group>"; };
+		5F4B2426159D539400AFBAFD /* rv_mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rv_mask.png; path = RollerViewCnotrller/RVViewContrller/RVViewContrller/rv_mask.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 			children = (
 				5F4B23EA159C621800AFBAFD /* RollerViewCnotrller */,
 				5F4B23DC159C60A500AFBAFD /* AppDelegate.h */,
+				5F4B2426159D539400AFBAFD /* rv_mask.png */,
 				5F4B23DD159C60A500AFBAFD /* AppDelegate.m */,
 				5F4B23D4159C60A500AFBAFD /* Supporting Files */,
 			);
@@ -191,6 +194,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F4B23D8159C60A500AFBAFD /* InfoPlist.strings in Resources */,
+				5F4B2427159D539400AFBAFD /* rv_mask.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

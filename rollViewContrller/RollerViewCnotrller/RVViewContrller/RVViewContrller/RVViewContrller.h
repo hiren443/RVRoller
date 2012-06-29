@@ -19,7 +19,4 @@
 
 - (void)setViewControllers:(NSArray *)viewControllers aniamted:(BOOL)animated;
 
-// set the index to show
-@property (nonatomic, assign)   NSInteger   index;
-
 @end

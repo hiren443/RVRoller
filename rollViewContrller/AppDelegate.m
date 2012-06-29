@@ -20,28 +20,28 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.viewController = [[RVViewContrller alloc] init];
+    self.viewController.contentView.spacing = 45;
     
     NSMutableArray *viewControllers = [NSMutableArray array];
     UIViewController *ctrl = [[UIViewController alloc] init];
-    ctrl.title = @"1号";
+    ctrl.title = @"Foot";
     ctrl.view.backgroundColor = [UIColor redColor];
     [viewControllers addObject:ctrl];
     
     ctrl = [[UIViewController alloc] init];
-    ctrl.title = @"2号";
+    ctrl.title = @"Milk&Moo";
     ctrl.view.backgroundColor = [UIColor blueColor];
     [viewControllers addObject:ctrl];
     
     ctrl = [[UIViewController alloc] init];
-    ctrl.title = @"3号";
+    ctrl.title = @"Key";
     ctrl.view.backgroundColor = [UIColor yellowColor];
     [viewControllers addObject:ctrl];
     
     ctrl = [[UIViewController alloc] init];
-    ctrl.title = @"4号";
+    ctrl.title = @"Omiga";
     ctrl.view.backgroundColor = [UIColor blackColor];
     [viewControllers addObject:ctrl];
-    
     [self.viewController setViewControllers:viewControllers
                                    aniamted:YES];
     
