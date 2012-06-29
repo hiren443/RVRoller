@@ -31,5 +31,11 @@
 @protocol RVContentViewDelegate <NSObject>
 
 - (UIView*)contentView:(RVContentView*)view contentAtIndex:(NSInteger)index;
+- (UIView*)contentView:(RVContentView*)view leftViewAt:(NSInteger)index;
+- (UIView*)contentView:(RVContentView*)view rightViewAt:(NSInteger)index;
+
+@optional
+
+- (void)contentView:(RVContentView*)view willRollToIndex:(NSInteger)index;
 
 @end

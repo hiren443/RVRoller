@@ -16,6 +16,7 @@
 		5F4B23DE159C60A500AFBAFD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4B23DD159C60A500AFBAFD /* AppDelegate.m */; };
 		5F4B2419159C734200AFBAFD /* libRVViewContrller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F4B240E159C63C100AFBAFD /* libRVViewContrller.a */; };
 		5F4B2427159D539400AFBAFD /* rv_mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F4B2426159D539400AFBAFD /* rv_mask.png */; };
+		5F7BE599159D6F9D00814A65 /* TTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7BE598159D6F9D00814A65 /* TTViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,8 @@
 		5F4B23DD159C60A500AFBAFD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5F4B2409159C63C000AFBAFD /* RVViewContrller.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RVViewContrller.xcodeproj; path = RVViewContrller/RVViewContrller.xcodeproj; sourceTree = "<group>"; };
 		5F4B2426159D539400AFBAFD /* rv_mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rv_mask.png; path = RollerViewCnotrller/RVViewContrller/RVViewContrller/rv_mask.png; sourceTree = "<group>"; };
+		5F7BE597159D6F9D00814A65 /* TTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTViewController.h; sourceTree = "<group>"; };
+		5F7BE598159D6F9D00814A65 /* TTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +99,8 @@
 				5F4B2426159D539400AFBAFD /* rv_mask.png */,
 				5F4B23DD159C60A500AFBAFD /* AppDelegate.m */,
 				5F4B23D4159C60A500AFBAFD /* Supporting Files */,
+				5F7BE597159D6F9D00814A65 /* TTViewController.h */,
+				5F7BE598159D6F9D00814A65 /* TTViewController.m */,
 			);
 			path = rollViewContrller;
 			sourceTree = "<group>";
@@ -207,6 +212,7 @@
 			files = (
 				5F4B23DA159C60A500AFBAFD /* main.m in Sources */,
 				5F4B23DE159C60A500AFBAFD /* AppDelegate.m in Sources */,
+				5F7BE599159D6F9D00814A65 /* TTViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,7 +282,7 @@
 				GCC_PREFIX_HEADER = "rollViewContrller/rollViewContrller-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/rollViewContrller/RollerViewCnotrller/RVViewContrller/RVViewContrller\"";
 				INFOPLIST_FILE = "rollViewContrller/rollViewContrller-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -289,7 +295,7 @@
 				GCC_PREFIX_HEADER = "rollViewContrller/rollViewContrller-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/rollViewContrller/RollerViewCnotrller/RVViewContrller/RVViewContrller\"";
 				INFOPLIST_FILE = "rollViewContrller/rollViewContrller-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

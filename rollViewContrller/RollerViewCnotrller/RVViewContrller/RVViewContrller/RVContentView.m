@@ -335,15 +335,20 @@
     
     CGRect rect = self.bounds;
     _nowView = [_delegate contentView:self contentAtIndex:_index];
+    if ([_delegate respondsToSelector:@selector(contentView:willRollToIndex:)]) {
+        [_delegate contentView:self willRollToIndex:_index];
+    }
     _nowView.frame = (CGRect){0,0,rect.size};
     [_contentView addSubview:_nowView];
     if (_index > 0) {
-        _leftView = _whiteView1;
+        _leftView = [_delegate contentView:self leftViewAt:_index - 1];
+        if (!_leftView) _leftView = _whiteView1;
         _leftView.frame = (CGRect){-rect.size.width,0,rect.size};
         [_contentView addSubview:_leftView];
     }else _leftView = nil;
     if (_index < [_titles count] - 1) {
-        _rightView = _whiteView2;
+        _rightView = [_delegate contentView:self rightViewAt:_index + 1];
+        if (!_rightView) _rightView = _whiteView2;
         _rightView.frame = (CGRect){rect.size.width,0,rect.size};
         [_contentView addSubview:_rightView];
     }else _rightView = nil;

@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 
 #import "RVViewContrller.h"
+#import "TTViewController.h"
 
 @implementation AppDelegate
 
@@ -23,24 +24,20 @@
     self.viewController.contentView.spacing = 45;
     
     NSMutableArray *viewControllers = [NSMutableArray array];
-    UIViewController *ctrl = [[UIViewController alloc] init];
+    UIViewController *ctrl = [[TTViewController alloc] init];
     ctrl.title = @"Foot";
-    ctrl.view.backgroundColor = [UIColor redColor];
     [viewControllers addObject:ctrl];
     
-    ctrl = [[UIViewController alloc] init];
+    ctrl = [[TTViewController alloc] init];
     ctrl.title = @"Milk&Moo";
-    ctrl.view.backgroundColor = [UIColor blueColor];
     [viewControllers addObject:ctrl];
     
-    ctrl = [[UIViewController alloc] init];
+    ctrl = [[TTViewController alloc] init];
     ctrl.title = @"Key";
-    ctrl.view.backgroundColor = [UIColor yellowColor];
     [viewControllers addObject:ctrl];
     
-    ctrl = [[UIViewController alloc] init];
+    ctrl = [[TTViewController alloc] init];
     ctrl.title = @"Omiga";
-    ctrl.view.backgroundColor = [UIColor blackColor];
     [viewControllers addObject:ctrl];
     [self.viewController setViewControllers:viewControllers
                                    aniamted:YES];

@@ -14,7 +14,9 @@
 
 @end
 
-@implementation RVViewContrller 
+@implementation RVViewContrller {
+    int _oldIndex;
+}
 
 @synthesize viewControllers = _viewControllers;
 @synthesize contentView = _contentView;
@@ -57,6 +59,41 @@
 - (UIView*)contentView:(RVContentView *)view contentAtIndex:(NSInteger)index
 {
     return [[_viewControllers objectAtIndex:index] view];
+}
+
+- (void)contentView:(RVContentView *)view willRollToIndex:(NSInteger)index
+{
+    if (_oldIndex == index) {
+        return;
+    }
+    UIViewController *ctrl = [_viewControllers objectAtIndex:_oldIndex];
+    [ctrl viewWillDisappear:NO];
+    [ctrl performSelector:@selector(viewDidDisappear:)
+               withObject:nil afterDelay:0];
+    _oldIndex = index;
+    ctrl = [_viewControllers objectAtIndex:index];
+    [ctrl viewDidAppear:NO];
+    [ctrl performSelector:@selector(viewDidAppear:)
+               withObject:nil afterDelay:0];
+}
+
+- (UIView*)getViewAt:(NSInteger)index
+{
+    UIViewController *ctrl = [_viewControllers objectAtIndex:index];
+    if ([ctrl isViewLoaded]) {
+        return ctrl.view;
+    }
+    return nil;
+}
+
+- (UIView*)contentView:(RVContentView *)view leftViewAt:(NSInteger)index
+{
+    return [self getViewAt:index];
+}
+
+- (UIView*)contentView:(RVContentView *)view rightViewAt:(NSInteger)index
+{
+    return [self getViewAt:index];
 }
 
 @end
