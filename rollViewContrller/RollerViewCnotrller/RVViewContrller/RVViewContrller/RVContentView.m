@@ -147,17 +147,24 @@
     if (animated) {
         //set animation here.
         [UIView transitionWithView:_titleScrollView
-                          duration:0.2
+                          duration:0.3
                            options:UIViewAnimationCurveEaseOut
                         animations:^
          {
-             _titleScrollView.contentOffset = CGPointMake(-100, 0);
+             _titleScrollView.contentInset = UIEdgeInsetsMake(0, 320, 0, 0);
+             _titleScrollView.contentOffset = CGPointMake(-320 , 0);
          } 
                         completion:^(BOOL finished) 
          {
              [self setTitlesWithOldCount:count];
-             [self _setIndexAnimated:animated];
              [self _showAtPage];
+             id obj = nil;
+             if (animated) {
+                 //just some valued
+                 obj = @"1";
+             }
+             [self performSelector:@selector(_setbackInset:)
+                        withObject:obj afterDelay:0.2];
          }];
     }else {
         [self setTitlesWithOldCount:count];
@@ -166,6 +173,23 @@
     }
 }
 
+- (void)_setbackInset:(BOOL)animated
+{
+    CGRect frame = _titleScrollView.bounds;
+    if (animated) {
+        [UIView animateWithDuration:0.3
+                         animations:^
+         {
+             _titleScrollView.contentInset = UIEdgeInsetsMake(0, frame.size.width / 2 - 1,
+                                                              0, frame.size.width / 2 - 1);
+             [self _setIndexAnimated:animated];
+         }];
+    }else {
+        _titleScrollView.contentInset = UIEdgeInsetsMake(0, frame.size.width / 2 - 1,
+                                                         0, frame.size.width / 2 - 1);
+        [self _setIndexAnimated:animated];
+    }
+}
 
 - (void)setTitlesWithOldCount:(NSInteger)count
 {

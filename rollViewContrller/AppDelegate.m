@@ -23,28 +23,67 @@
     self.viewController = [[RVViewContrller alloc] init];
     self.viewController.contentView.spacing = 45;
     
-    NSMutableArray *viewControllers = [NSMutableArray array];
-    UIViewController *ctrl = [[TTViewController alloc] init];
-    ctrl.title = @"Foot";
-    [viewControllers addObject:ctrl];
-    
-    ctrl = [[TTViewController alloc] init];
-    ctrl.title = @"Milk&Moo";
-    [viewControllers addObject:ctrl];
-    
-    ctrl = [[TTViewController alloc] init];
-    ctrl.title = @"Key";
-    [viewControllers addObject:ctrl];
-    
-    ctrl = [[TTViewController alloc] init];
-    ctrl.title = @"Omiga";
-    [viewControllers addObject:ctrl];
-    [self.viewController setViewControllers:viewControllers
-                                   aniamted:YES];
+    [self setViewShow:1];
     
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [button setTitle:@"click me!"
+            forState:UIControlStateNormal];
+    [button addTarget:self
+               action:@selector(clicked)
+     forControlEvents:UIControlEventTouchUpInside];
+    button.frame = CGRectMake(20, 35, 100, 28);
+    [self.window addSubview:button];
+    
     return YES;
+}
+
+static int _type;
+
+- (void)setViewShow:(NSInteger)type
+{
+    _type = type;
+    if (type == 1) {
+        NSMutableArray *viewControllers = [NSMutableArray array];
+        UIViewController *ctrl = [[TTViewController alloc] init];
+        ctrl.title = @"Foot";
+        [viewControllers addObject:ctrl];
+        
+        ctrl = [[TTViewController alloc] init];
+        ctrl.title = @"Milk&Moo";
+        [viewControllers addObject:ctrl];
+        
+        ctrl = [[TTViewController alloc] init];
+        ctrl.title = @"Key";
+        [viewControllers addObject:ctrl];
+        
+        ctrl = [[TTViewController alloc] init];
+        ctrl.title = @"Omiga";
+        [viewControllers addObject:ctrl];
+        [self.viewController setViewControllers:viewControllers
+                                       aniamted:YES];
+    }else {
+        NSMutableArray *viewControllers = [NSMutableArray array];
+        UIViewController *ctrl = [[TTViewController alloc] init];
+        ctrl.title = @"Foot2";
+        [viewControllers addObject:ctrl];
+        
+        ctrl = [[TTViewController alloc] init];
+        ctrl.title = @"Milk&Moo2";
+        [viewControllers addObject:ctrl];
+        
+        ctrl = [[TTViewController alloc] init];
+        ctrl.title = @"Key2";
+        [viewControllers addObject:ctrl];
+        
+        ctrl = [[TTViewController alloc] init];
+        ctrl.title = @"Omiga2";
+        [viewControllers addObject:ctrl];
+        [self.viewController setViewControllers:viewControllers
+                                       aniamted:YES];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -72,6 +111,11 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)clicked
+{
+    [self setViewShow:!_type];
 }
 
 @end

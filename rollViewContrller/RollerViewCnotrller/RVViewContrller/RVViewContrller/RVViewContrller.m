@@ -42,8 +42,12 @@
         
     }
     NSMutableArray *array = [NSMutableArray array];
+    BOOL add = [self respondsToSelector:@selector(addChildViewController:)];
     for (UIViewController *c in viewControllers) {
         [array addObject:c.title];
+        if (add) {
+            [self addChildViewController:c];
+        }
     }
     [_contentView setTitles:array animated:animated];
 }
