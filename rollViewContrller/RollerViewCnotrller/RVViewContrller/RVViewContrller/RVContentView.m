@@ -43,8 +43,10 @@
     UIView          *_whiteView1,
                     *_whiteView2,
                     *_contentView;
-    CALayer         *_blackLayer;
+    CALayer         *_blackLayer,
+                    *_makeLayer;
     NSTimeInterval  _startTime;
+    UIImageView     *_shadowImageView;
     __unsafe_unretained UIView  *_leftView,
                                 *_rightView,
                                 *_nowView;
@@ -56,6 +58,7 @@
 @synthesize spacing = _spacing, headrColor = _headrColor;
 @synthesize headerTextColor = _headerTextColor;
 @synthesize headerHeight = _headerHeight;
+@synthesize shadowImage = _shadowImage;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -86,27 +89,32 @@
         
         _contentView = [[UIView alloc] initWithFrame:CGRectMake(0, _headerHeight, frame.size.width, frame.size.height - _headerHeight)];
         [self insertSubview:_contentView belowSubview:_titleScrollView];
-        _whiteView1 = [[UIView alloc] initWithFrame:(CGRect){0, 0, frame.size}];
+        
+        CGRect bounds = _contentView.bounds;
+        
+        _whiteView1 = [[UIView alloc] initWithFrame:(CGRect){0, 0, bounds.size}];
         UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        activity.center = CGPointMake(frame.size.width/2, frame.size.height/2);
+        activity.center = CGPointMake(bounds.size.width/2, bounds.size.height/2);
         [activity startAnimating];
         [_whiteView1 addSubview:activity];
-        _whiteView2 = [[UIView alloc] initWithFrame:(CGRect){0, 0, frame.size}];activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        activity.center = CGPointMake(frame.size.width/2, frame.size.height/2);
+        
+        _whiteView2 = [[UIView alloc] initWithFrame:(CGRect){0, 0, bounds.size}];
+        activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        activity.center = CGPointMake(bounds.size.width/2, bounds.size.height/2);
         [_whiteView2 addSubview:activity];
         [activity startAnimating];
         
         _pan = [[UIPanGestureRecognizer alloc] initWithTarget:self
                                                        action:@selector(panedOn:)];
         [_contentView addGestureRecognizer:_pan];
-        CALayer *mask = [CALayer layer];
-        mask.contents = (id)[UIImage imageNamed:@"rv_mask"].CGImage;
-        mask.frame = CGRectMake(0, 0, 320, 25);
+        _makeLayer = [CALayer layer];
+        _makeLayer.contents = (id)[UIImage imageNamed:@"rv_mask"].CGImage;
+        _makeLayer.frame = CGRectMake(0, 0, 320, _headerHeight);
         _blackLayer = [CALayer layer];
         _blackLayer.frame = _titleScrollView.frame;
         _blackLayer.backgroundColor = _headrColor.CGColor;
         [self.layer addSublayer:_blackLayer];
-        _blackLayer.mask = mask;
+        _blackLayer.mask = _makeLayer;
     }
     return self;
 }
@@ -114,8 +122,8 @@
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
-    _blackLayer.frame = _titleScrollView.frame =
-                CGRectMake(0, 0, frame.size.width, 25);
+    _makeLayer.frame = _blackLayer.frame = _titleScrollView.frame =
+                CGRectMake(0, 0, frame.size.width, _headerHeight);
     _titleScrollView.contentInset = UIEdgeInsetsMake(0, frame.size.width / 2 - 1,
                                                      0, frame.size.width / 2 - 1);
     
@@ -204,17 +212,33 @@
     _headerTextColor = headerTextColor;
 }
 
+- (void)setShadowImage:(UIImage *)shadowImage
+{
+    _shadowImage = shadowImage;
+    _titleScrollView.layer.shadowOpacity = 0;
+    if (!_shadowImageView && shadowImage) {
+        CGRect frame = _titleScrollView.frame;
+        _shadowImageView = [[UIImageView alloc] initWithFrame:
+                            CGRectMake(frame.origin.x, frame.origin.y+frame.size.height,
+                                       frame.size.width, 3)];
+        [self insertSubview:_shadowImageView
+               belowSubview:_titleScrollView];
+    }
+    _shadowImageView.image = shadowImage;
+}
+
 - (void)setHeaderHeight:(CGFloat)headerHeight
 {
     _headerHeight = headerHeight;
     
     CGRect frame = self.frame;
-    _blackLayer.frame = _titleScrollView.frame =
-            CGRectMake(0, 0, frame.size.width, 25);
+    _makeLayer.frame = _blackLayer.frame = _titleScrollView.frame =
+            CGRectMake(0, 0, frame.size.width, _headerHeight);
     
     _contentView.frame = CGRectMake(0, _headerHeight, frame.size.width, 
                                     frame.size.height - _headerHeight);
     _whiteView2.bounds = _whiteView1.bounds = (CGRect){0, 0, frame.size};
+    _shadowImageView.frame = CGRectMake(0, _headerHeight, frame.size.width, 3);
     
     for (int n = 0, t = [_titles count]; n < t; n ++) {
         UIButton *button = (id)[_titleScrollView viewWithTag:TempCount(n)];
@@ -258,7 +282,7 @@
         
         NSString *title = [_titles objectAtIndex:n];
         CGSize size = [title sizeWithFont:_font
-                        constrainedToSize:CGSizeMake(MAXFLOAT, 25)];
+                        constrainedToSize:CGSizeMake(MAXFLOAT, _headerHeight)];
         
         //make the button.
 //        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(fv + _spacing, 0, size.width, 25)];
@@ -293,7 +317,7 @@
             fv += size.width / 2 + _spacing + upper / 2;
             [_indexes addObject:[NSNumber numberWithFloat:fv]];
         }
-        button.frame = CGRectMake(fv - size.width / 2 , 0, size.width, 25);
+        button.frame = CGRectMake(fv - size.width / 2 , 0, size.width, _headerHeight);
         upper = size.width;
     }
     

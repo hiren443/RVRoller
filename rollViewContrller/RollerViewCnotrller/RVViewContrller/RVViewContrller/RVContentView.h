@@ -35,6 +35,9 @@
 @property (nonatomic, assign)   NSInteger   index;
 - (void)setIndex:(NSInteger)index animated:(BOOL)animated;
 
+//if set shadowImage , it will ignore showShadow,
+@property (nonatomic, strong)   UIImage     *shadowImage;
+
 // one page flip.
 - (void)nextPage;
 - (void)prevPage;
