@@ -283,6 +283,7 @@
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/rollViewContrller/RollerViewCnotrller/RVViewContrller/RVViewContrller\"";
 				INFOPLIST_FILE = "rollViewContrller/rollViewContrller-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
+				OTHER_LDFLAGS = "-fobjc-arc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -296,6 +297,7 @@
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/rollViewContrller/RollerViewCnotrller/RVViewContrller/RVViewContrller\"";
 				INFOPLIST_FILE = "rollViewContrller/rollViewContrller-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
+				OTHER_LDFLAGS = "-fobjc-arc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

@@ -141,10 +141,9 @@
 }
 */
 
-
-- (void)layoutSubviews
+- (void)didMoveToSuperview
 {
-    [super layoutSubviews];
+    [super didMoveToSuperview];
     [self _showAtPage];
 }
 
@@ -497,7 +496,6 @@
     CGRect rect = _contentView.bounds;
     if (_index > 0) {
         _index --;
-        [self _checkBeside];
         [UIView animateWithDuration:0.3
                          animations:^
          {
@@ -507,6 +505,7 @@
          } completion:^(BOOL finished) 
          {
              [self _showAtPage];
+             [self _checkBeside];
          }];
     }else {
         [self turnBack];
@@ -518,7 +517,6 @@
     if (_index < [_titles count] - 1) {
         CGRect rect = _contentView.bounds;
         _index ++;
-        [self _checkBeside];
         [UIView animateWithDuration:0.3
                          animations:^
          {
@@ -528,6 +526,7 @@
          } completion:^(BOOL finished) 
          {
              [self _showAtPage];
+             [self _checkBeside];
          }];
     }else {
         [self turnBack];
