@@ -28,6 +28,12 @@
     _contentView.delegate = self;
 }
 
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    _contentView = nil;
+}
+
 - (void)setViewControllers:(NSArray *)viewControllers
 {
     [self setViewControllers:viewControllers aniamted:NO];
@@ -43,7 +49,9 @@
     }
     NSMutableArray *array = [NSMutableArray array];
     for (UIViewController *c in viewControllers) {
-        [array addObject:c.title];
+        if (c.title) {
+            [array addObject:c.title];
+        }else [array addObject:@""];
     }
     [_contentView setTitles:array animated:animated];
 }

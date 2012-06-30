@@ -38,6 +38,9 @@
 //if set shadowImage , it will ignore showShadow,
 @property (nonatomic, strong)   UIImage     *shadowImage;
 
+
+@property (nonatomic, assign)   BOOL        scrollEnable;
+
 // one page flip.
 - (void)nextPage;
 - (void)prevPage;

@@ -325,8 +325,10 @@
          
 - (void)clickAtButton:(UIButton*)sender
 {
-    [self setIndex:ShowCount(sender.tag)
-          animated:YES];
+    if (_pan.enabled) {
+        [self setIndex:ShowCount(sender.tag)
+              animated:YES];
+    }
 }
 
 - (void)setIndex:(NSInteger)index animated:(BOOL)animated
@@ -560,6 +562,9 @@
 
 - (void)panedOn:(UIPanGestureRecognizer*)sender
 {
+    if (![_indexes count]) {
+        return;
+    }
     CGPoint p = [sender translationInView:_contentView];
     int state = sender.state;
     if ((_index > 0 || p.x < 0) && (_index < [_indexes count] - 1 || p.x > 0)) {
@@ -583,14 +588,14 @@
     
     if (state == UIGestureRecognizerStateBegan) {
         [self _checkBeside];
-        _startTime = [[sender valueForKey:@"_lastTouchTime"] floatValue];
+        _startTime = [NSDate timeIntervalSinceReferenceDate];
     }else if (state == UIGestureRecognizerStateCancelled ||
               state == UIGestureRecognizerStateFailed ||
               state == UIGestureRecognizerStateEnded) {
-        NSTimeInterval interval = [[sender valueForKey:@"_lastTouchTime"] floatValue] - _startTime;
-        if ((interval < 0.2f && p.x > 0.0f) || p.x > 40.0f) {
+        NSTimeInterval interval = [NSDate timeIntervalSinceReferenceDate] - _startTime;
+        if ((interval < 0.2f && p.x > 0.0f) || p.x > 90.0f) {
             [self prevPage];
-        }else if ((interval < 0.2f && p.x < 0.0f) || p.x < -40.0f) {
+        }else if ((interval < 0.2f && p.x < 0.0f) || p.x < -90.0f) {
             [self nextPage];
         }else {
             [self turnBack];
@@ -611,6 +616,17 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     [self _checkAndSet];
+}
+
+- (void)setScrollEnable:(BOOL)scrollEnable
+{
+    _pan.enabled = scrollEnable;
+    _titleScrollView.scrollEnabled = scrollEnable;
+}
+
+- (BOOL)scrollEnable
+{
+    return _pan.enabled;
 }
 
 @end
