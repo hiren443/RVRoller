@@ -434,16 +434,23 @@
     [_contentView.layer addAnimation:animation
                               forKey:@""];
     [_leftView removeFromSuperview];
+    _leftView = nil;
     [_rightView removeFromSuperview];
+    _rightView = nil;
     [_nowView removeFromSuperview];
     
-    CGRect rect = self.bounds;
+    CGRect rect = _contentView.bounds;
     _nowView = [_delegate contentView:self contentAtIndex:_index];
     if ([_delegate respondsToSelector:@selector(contentView:willRollToIndex:)]) {
         [_delegate contentView:self willRollToIndex:_index];
     }
     _nowView.frame = (CGRect){0,0,rect.size};
     [_contentView addSubview:_nowView];
+}
+
+- (void)_checkBeside
+{
+    CGRect rect = _contentView.bounds;
     if (_index > 0) {
         _leftView = [_delegate contentView:self leftViewAt:_index - 1];
         if (!_leftView) _leftView = _whiteView1;
@@ -490,6 +497,7 @@
     CGRect rect = _contentView.bounds;
     if (_index > 0) {
         _index --;
+        [self _checkBeside];
         [UIView animateWithDuration:0.3
                          animations:^
          {
@@ -510,6 +518,7 @@
     if (_index < [_titles count] - 1) {
         CGRect rect = _contentView.bounds;
         _index ++;
+        [self _checkBeside];
         [UIView animateWithDuration:0.3
                          animations:^
          {
@@ -574,6 +583,7 @@
     
     
     if (state == UIGestureRecognizerStateBegan) {
+        [self _checkBeside];
         _startTime = [[sender valueForKey:@"_lastTouchTime"] floatValue];
     }else if (state == UIGestureRecognizerStateCancelled ||
               state == UIGestureRecognizerStateFailed ||

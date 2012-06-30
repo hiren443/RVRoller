@@ -42,12 +42,8 @@
         
     }
     NSMutableArray *array = [NSMutableArray array];
-    BOOL add = [self respondsToSelector:@selector(addChildViewController:)];
     for (UIViewController *c in viewControllers) {
         [array addObject:c.title];
-        if (add) {
-            [self addChildViewController:c];
-        }
     }
     [_contentView setTitles:array animated:animated];
 }
@@ -70,12 +66,18 @@
     if (_oldIndex == index) {
         return;
     }
+    
     UIViewController *ctrl = [_viewControllers objectAtIndex:_oldIndex];
+    if ([ctrl respondsToSelector:@selector(removeFromParentViewController)])
+        [ctrl removeFromParentViewController];
     [ctrl viewWillDisappear:NO];
     [ctrl performSelector:@selector(viewDidDisappear:)
                withObject:nil afterDelay:0];
     _oldIndex = index;
     ctrl = [_viewControllers objectAtIndex:index];
+    if ([self respondsToSelector:@selector(addChildViewController:)]) {
+        [self addChildViewController:ctrl];
+    }
     [ctrl viewDidAppear:NO];
     [ctrl performSelector:@selector(viewDidAppear:)
                withObject:nil afterDelay:0];
