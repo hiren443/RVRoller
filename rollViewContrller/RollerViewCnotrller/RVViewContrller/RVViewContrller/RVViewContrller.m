@@ -75,20 +75,27 @@
         return;
     }
     
+    BOOL lower5 = [[[UIDevice currentDevice] systemVersion] floatValue] < 5.0;
+    
     UIViewController *ctrl = [_viewControllers objectAtIndex:_oldIndex];
     if ([ctrl respondsToSelector:@selector(removeFromParentViewController)])
         [ctrl removeFromParentViewController];
-    [ctrl viewWillDisappear:NO];
-    [ctrl performSelector:@selector(viewDidDisappear:)
-               withObject:nil afterDelay:0];
-    _oldIndex = index;
-    ctrl = [_viewControllers objectAtIndex:index];
-    if ([self respondsToSelector:@selector(addChildViewController:)]) {
-        [self addChildViewController:ctrl];
+    if (lower5) {
+        [ctrl viewWillDisappear:NO];
+        [ctrl performSelector:@selector(viewDidDisappear:)
+                   withObject:nil afterDelay:0];
     }
-    [ctrl viewDidAppear:NO];
-    [ctrl performSelector:@selector(viewDidAppear:)
-               withObject:nil afterDelay:0];
+    _oldIndex = index;
+    UIViewController *ctrl2 = [_viewControllers objectAtIndex:index];
+    if ([self respondsToSelector:@selector(addChildViewController:)]) {
+        [self addChildViewController:ctrl2];
+    }
+    if (lower5) {
+        [ctrl2 viewDidAppear:NO];
+        [ctrl2 performSelector:@selector(viewDidAppear:)
+                    withObject:nil afterDelay:0];
+    }
+    
 }
 
 - (UIView*)getViewAt:(NSInteger)index
