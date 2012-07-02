@@ -69,6 +69,12 @@
     return [[_viewControllers objectAtIndex:index] view];
 }
 
+- (void)setWantsFullScreenLayout:(BOOL)wantsFullScreenLayout
+{
+    [super setWantsFullScreenLayout:wantsFullScreenLayout];
+    self.contentView.fullScreen = wantsFullScreenLayout;
+}
+
 - (void)contentView:(RVContentView *)view willRollToIndex:(NSInteger)index
 {
     if (_oldIndex == index) {

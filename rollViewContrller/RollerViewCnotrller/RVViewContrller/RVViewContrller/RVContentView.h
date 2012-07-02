@@ -36,13 +36,15 @@
 - (void)setIndex:(NSInteger)index animated:(BOOL)animated;
 
 //if set shadowImage , it will ignore showShadow,
-@property (nonatomic, strong)   UIImage     *shadowImage;
+@property (nonatomic, strong)   UIImage     *shadowImage;   
 
 //just mean as name.
 @property (nonatomic, assign)   BOOL        scrollEnable;
 
 // is contents use the full screen
 @property (nonatomic, assign)   BOOL        contentFullScreen;
+//
+@property (nonatomic, assign)   BOOL        fullScreen;
 
 // one page flip.
 - (void)nextPage;

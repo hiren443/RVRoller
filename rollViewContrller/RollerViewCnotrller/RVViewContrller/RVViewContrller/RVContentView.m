@@ -44,7 +44,7 @@
                     *_whiteView2,
                     *_contentView;
     CALayer         *_blackLayer,
-                    *_makeLayer;
+                    *_maskLayer;
     NSTimeInterval  _startTime;
     UIImageView     *_shadowImageView;
     __unsafe_unretained UIView  *_leftView,
@@ -60,6 +60,7 @@
 @synthesize headerHeight = _headerHeight;
 @synthesize shadowImage = _shadowImage;
 @synthesize contentFullScreen = _contentFullScreen;
+@synthesize fullScreen = _fullScreen;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -108,14 +109,14 @@
         _pan = [[UIPanGestureRecognizer alloc] initWithTarget:self
                                                        action:@selector(panedOn:)];
         [_contentView addGestureRecognizer:_pan];
-        _makeLayer = [CALayer layer];
-        _makeLayer.contents = (id)[UIImage imageNamed:@"rv_mask"].CGImage;
-        _makeLayer.frame = CGRectMake(0, 0, 320, _headerHeight);
+        _maskLayer = [CALayer layer];
+        _maskLayer.contents = (id)[UIImage imageNamed:@"rv_mask"].CGImage;
+        _maskLayer.frame = CGRectMake(0, 0, 320, _headerHeight);
         _blackLayer = [CALayer layer];
         _blackLayer.frame = _titleScrollView.frame;
         _blackLayer.backgroundColor = _headrColor.CGColor;
         [self.layer addSublayer:_blackLayer];
-        _blackLayer.mask = _makeLayer;
+        _blackLayer.mask = _maskLayer;
     }
     return self;
 }
@@ -123,8 +124,17 @@
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
-        _makeLayer.frame = _blackLayer.frame = _titleScrollView.frame =
+    if (_fullScreen) {
+        _blackLayer.frame = _titleScrollView.frame =
+        CGRectMake(0, 20, frame.size.width, _headerHeight);
+        _maskLayer.frame = _blackLayer.bounds;
+        _shadowImageView.frame = CGRectMake(0, _headerHeight + 20, frame.size.width, 3);
+    }else {
+        _blackLayer.frame = _titleScrollView.frame =
         CGRectMake(0, 0, frame.size.width, _headerHeight);
+        _maskLayer.frame = _blackLayer.bounds;
+        _shadowImageView.frame = CGRectMake(0, _headerHeight, frame.size.width, 3);
+    }
     _titleScrollView.contentInset = UIEdgeInsetsMake(0, frame.size.width / 2 - 1,
                                                      0, frame.size.width / 2 - 1);
 
@@ -153,6 +163,37 @@
 }
 
 #pragma mark - setters
+
+- (void)setContentFullScreen:(BOOL)contentFullScreen
+{
+    _contentFullScreen = contentFullScreen;
+    if (_contentFullScreen) {
+        _contentView.frame = self.bounds;
+    }else {
+        _contentView.frame = (CGRect){0,_headerHeight, self.bounds.size.width,
+            self.bounds.size.height - _headerHeight};
+    }
+}
+
+- (void)setFullScreen:(BOOL)fullScreen
+{
+    _fullScreen = fullScreen;
+    if (_fullScreen) {
+        CGRect rect = _titleScrollView.frame;
+        rect.origin.y = 20;
+        _titleScrollView.frame = rect;
+        rect = _shadowImageView.frame;
+        rect.origin.y = 20;
+        _shadowImageView.frame = rect;
+    }else {
+        CGRect rect = _titleScrollView.frame;
+        rect.origin.y = 0;
+        _titleScrollView.frame = rect;
+        rect = _shadowImageView.frame;
+        rect.origin.y = 20;
+        _shadowImageView.frame = rect;
+    }
+}
 
 - (void)setIndex:(NSInteger)index
 {
@@ -235,8 +276,6 @@
 {
     _headerHeight = headerHeight;
     CGRect frame = self.frame;
-    _makeLayer.frame = _blackLayer.frame = _titleScrollView.frame =
-            CGRectMake(0, 0, frame.size.width, _headerHeight);
     
     if (_contentFullScreen) {
         _contentView.frame = CGRectMake(0, _headerHeight, frame.size.width, 
@@ -244,7 +283,18 @@
     }
     
     _whiteView2.bounds = _whiteView1.bounds = (CGRect){0, 0, frame.size};
-    _shadowImageView.frame = CGRectMake(0, _headerHeight, frame.size.width, 3);
+    if (_fullScreen) {
+        _shadowImageView.frame = CGRectMake(0, _headerHeight + 20, frame.size.width, 3);
+        
+        _blackLayer.frame = _titleScrollView.frame =
+        CGRectMake(0, 20, frame.size.width, _headerHeight);
+        _maskLayer.frame = _blackLayer.bounds;
+    }else {
+        _shadowImageView.frame = CGRectMake(0, _headerHeight, frame.size.width, 3);
+        _blackLayer.frame = _titleScrollView.frame =
+        CGRectMake(0, 0, frame.size.width, _headerHeight);
+        _maskLayer.frame = _blackLayer.bounds;
+    }
     
     for (int n = 0, t = [_titles count]; n < t; n ++) {
         UIButton *button = (id)[_titleScrollView viewWithTag:TempCount(n)];
@@ -634,17 +684,6 @@
 - (BOOL)scrollEnable
 {
     return _pan.enabled;
-}
-
-- (void)setContentFullScreen:(BOOL)contentFullScreen
-{
-    _contentFullScreen = contentFullScreen;
-    if (_contentFullScreen) {
-        _contentView.frame = self.bounds;
-    }else {
-        _contentView.frame = (CGRect){0,_headerHeight, self.bounds.size.width,
-            self.bounds.size.height - _headerHeight};
-    }
 }
 
 @end
