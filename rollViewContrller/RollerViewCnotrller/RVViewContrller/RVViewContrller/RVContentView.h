@@ -38,8 +38,11 @@
 //if set shadowImage , it will ignore showShadow,
 @property (nonatomic, strong)   UIImage     *shadowImage;
 
-
+//just mean as name.
 @property (nonatomic, assign)   BOOL        scrollEnable;
+
+// is contents use the full screen
+@property (nonatomic, assign)   BOOL        contentFullScreen;
 
 // one page flip.
 - (void)nextPage;

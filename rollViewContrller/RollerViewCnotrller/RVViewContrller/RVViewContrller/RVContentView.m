@@ -59,6 +59,7 @@
 @synthesize headerTextColor = _headerTextColor;
 @synthesize headerHeight = _headerHeight;
 @synthesize shadowImage = _shadowImage;
+@synthesize contentFullScreen = _contentFullScreen;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -122,13 +123,17 @@
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
-    _makeLayer.frame = _blackLayer.frame = _titleScrollView.frame =
-                CGRectMake(0, 0, frame.size.width, _headerHeight);
+        _makeLayer.frame = _blackLayer.frame = _titleScrollView.frame =
+        CGRectMake(0, 0, frame.size.width, _headerHeight);
     _titleScrollView.contentInset = UIEdgeInsetsMake(0, frame.size.width / 2 - 1,
                                                      0, frame.size.width / 2 - 1);
-    
-    _contentView.frame = CGRectMake(0, _headerHeight, frame.size.width, 
+
+    if (_contentFullScreen) {
+        _contentView.frame = self.bounds;
+    }else {
+        _contentView.frame = CGRectMake(0, _headerHeight, frame.size.width, 
                                     frame.size.height - _headerHeight);
+    }
     _whiteView2.bounds = _whiteView1.bounds = (CGRect){0, 0, frame.size};
 }
 
@@ -229,13 +234,15 @@
 - (void)setHeaderHeight:(CGFloat)headerHeight
 {
     _headerHeight = headerHeight;
-    
     CGRect frame = self.frame;
     _makeLayer.frame = _blackLayer.frame = _titleScrollView.frame =
             CGRectMake(0, 0, frame.size.width, _headerHeight);
     
-    _contentView.frame = CGRectMake(0, _headerHeight, frame.size.width, 
-                                    frame.size.height - _headerHeight);
+    if (_contentFullScreen) {
+        _contentView.frame = CGRectMake(0, _headerHeight, frame.size.width, 
+                                        frame.size.height - _headerHeight);
+    }
+    
     _whiteView2.bounds = _whiteView1.bounds = (CGRect){0, 0, frame.size};
     _shadowImageView.frame = CGRectMake(0, _headerHeight, frame.size.width, 3);
     
@@ -627,6 +634,17 @@
 - (BOOL)scrollEnable
 {
     return _pan.enabled;
+}
+
+- (void)setContentFullScreen:(BOOL)contentFullScreen
+{
+    _contentFullScreen = contentFullScreen;
+    if (_contentFullScreen) {
+        _contentView.frame = self.bounds;
+    }else {
+        _contentView.frame = (CGRect){0,_headerHeight, self.bounds.size.width,
+            self.bounds.size.height - _headerHeight};
+    }
 }
 
 @end
