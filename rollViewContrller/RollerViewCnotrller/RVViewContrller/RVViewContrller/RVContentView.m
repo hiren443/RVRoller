@@ -159,7 +159,9 @@
 - (void)didMoveToSuperview
 {
     [super didMoveToSuperview];
-    [self _showAtPage];
+    if (self.superview) {
+        [self _showAtPage];
+    }
 }
 
 #pragma mark - setters
@@ -477,7 +479,12 @@
 
 - (void)_setIndexAnimated:(BOOL)animated
 {
-    CGFloat left = [[_indexes objectAtIndex:_index] floatValue];
+    CGFloat left;
+    if ([_indexes count]) {
+        left = [[_indexes objectAtIndex:_index] floatValue];
+    }else {
+        left = 0;
+    }
     [self _setTitleScrollViewLeft:left :animated];
 }
 
@@ -613,6 +620,14 @@
     _leftView.frame = (CGRect){f-rect.size.width,0,rect.size};
     _nowView.frame = (CGRect){f,0,rect.size};
     _rightView.frame = (CGRect){f+rect.size.width,0,rect.size};
+}
+
+- (void)didMemoryWarring
+{
+    [_leftView removeFromSuperview];
+    _leftView = nil;
+    [_rightView removeFromSuperview];
+    _rightView = nil;
 }
 
 #pragma mark - recongnizer

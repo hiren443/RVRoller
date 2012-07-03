@@ -8,6 +8,7 @@
 
 #import "RVViewContrller.h"
 #import "RVContentView.h"
+#import "RVContentView_private.h"
 
 @interface RVViewContrller()
 <RVContentViewDelegate>
@@ -21,17 +22,52 @@
 @synthesize viewControllers = _viewControllers;
 @synthesize contentView = _contentView;
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(receivedMemoryWarningNotification:) 
+                                                     name:UIApplicationDidReceiveMemoryWarningNotification
+                                                   object:nil];
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationDidReceiveMemoryWarningNotification
+                                                  object:nil];
+}
+
+- (void)receivedMemoryWarningNotification:(id)sender
+{
+    [_contentView didMemoryWarring];
+    for (int n = 0, t = [_viewControllers count] ; n < t ; n++) {
+        if (n != _oldIndex) {
+            UIViewController *ctrl = [_viewControllers objectAtIndex:n];
+            ctrl.view = nil;
+            [ctrl viewDidUnload];
+        }
+    }
+}
 
 - (void)loadView
 {
-   self.view = _contentView = [[RVContentView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.view = _contentView = [[RVContentView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     _contentView.delegate = self;
+    [self setViewControllers:_viewControllers];
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
     _contentView = nil;
+    for (UIViewController *ctrl in _viewControllers) {
+        ctrl.view = nil;
+        [ctrl viewDidUnload];
+    }
 }
 
 - (void)setViewControllers:(NSArray *)viewControllers
