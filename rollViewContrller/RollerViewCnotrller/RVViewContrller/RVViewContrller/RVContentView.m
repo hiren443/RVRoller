@@ -519,6 +519,7 @@
     
     if (nowView == _leftView) {
         _nowView = _leftView;
+        _leftView = nil;
         goto flag1;
     }else {
         [_leftView removeFromSuperview];
@@ -526,6 +527,7 @@
     }
     if (nowView == _rightView) {
         _nowView = _rightView;
+        _rightView = nil;
         goto flag1;
     }else {
         [_rightView removeFromSuperview];
