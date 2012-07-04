@@ -36,7 +36,8 @@
 - (void)setIndex:(NSInteger)index animated:(BOOL)animated;
 
 //if set shadowImage , it will ignore showShadow,
-@property (nonatomic, strong)   UIImage     *shadowImage;   
+@property (nonatomic, strong)   UIImage     *shadowImage;
+@property (nonatomic, assign)   BOOL        showShadow;
 
 //just mean as name.
 @property (nonatomic, assign)   BOOL        scrollEnable;

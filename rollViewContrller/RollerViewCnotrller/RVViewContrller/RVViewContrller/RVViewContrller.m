@@ -90,6 +90,7 @@
         }else [array addObject:@""];
     }
     [_contentView setTitles:array animated:animated];
+    _oldIndex = _contentView.index;
 }
 
 - (RVContentView*)contentView
@@ -133,7 +134,7 @@
         [self addChildViewController:ctrl2];
     }
     if (lower5) {
-        [ctrl2 viewDidAppear:NO];
+        [ctrl2 viewWillAppear:NO];
         [ctrl2 performSelector:@selector(viewDidAppear:)
                     withObject:nil afterDelay:0];
     }
@@ -157,6 +158,70 @@
 - (UIView*)contentView:(RVContentView *)view rightViewAt:(NSInteger)index
 {
     return [self getViewAt:index];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    BOOL lower5 = [[[UIDevice currentDevice] systemVersion] floatValue] < 5.0;
+    if (lower5) {
+        UIViewController *ctrl = nil;
+        @try {
+            ctrl = [_viewControllers objectAtIndex:_oldIndex];
+        }
+        @catch (NSException *exception) {
+            ctrl = nil;
+        }
+        [ctrl viewWillAppear:animated];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    BOOL lower5 = [[[UIDevice currentDevice] systemVersion] floatValue] < 5.0;
+    if (lower5) {
+        UIViewController *ctrl = nil;
+        @try {
+            ctrl = [_viewControllers objectAtIndex:_oldIndex];
+        }
+        @catch (NSException *exception) {
+            ctrl = nil;
+        }
+        [ctrl viewDidAppear:animated];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    BOOL lower5 = [[[UIDevice currentDevice] systemVersion] floatValue] < 5.0;
+    if (lower5) {
+        UIViewController *ctrl = nil;
+        @try {
+            ctrl = [_viewControllers objectAtIndex:_oldIndex];
+        }
+        @catch (NSException *exception) {
+            ctrl = nil;
+        }
+        [ctrl viewWillDisappear:animated];
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    BOOL lower5 = [[[UIDevice currentDevice] systemVersion] floatValue] < 5.0;
+    if (lower5) {
+        UIViewController *ctrl = nil;
+        @try {
+            ctrl = [_viewControllers objectAtIndex:_oldIndex];
+        }
+        @catch (NSException *exception) {
+            ctrl = nil;
+        }
+        [ctrl viewDidDisappear:animated];
+    }
 }
 
 @end

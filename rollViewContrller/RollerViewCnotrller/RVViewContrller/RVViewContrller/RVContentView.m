@@ -47,9 +47,9 @@
                     *_maskLayer;
     NSTimeInterval  _startTime;
     UIImageView     *_shadowImageView;
-    __unsafe_unretained UIView  *_leftView,
-                                *_rightView,
-                                *_nowView;
+    UIView          *_leftView,
+                    *_rightView,
+                    *_nowView;
     UIPanGestureRecognizer      *_pan;
 }
 
@@ -61,6 +61,7 @@
 @synthesize shadowImage = _shadowImage;
 @synthesize contentFullScreen = _contentFullScreen;
 @synthesize fullScreen = _fullScreen;
+@synthesize showShadow = _showShadow;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -83,6 +84,7 @@
         _titleScrollView.backgroundColor = _headrColor;
         _titleScrollView.contentInset = UIEdgeInsetsMake(0, frame.size.width / 2,
                                                          0, frame.size.width / 2);
+        _titleScrollView.scrollsToTop = NO;
         _titleScrollView.decelerationRate = 20;
         self.backgroundColor = [UIColor whiteColor];
         
@@ -117,6 +119,8 @@
         _blackLayer.backgroundColor = _headrColor.CGColor;
         [self.layer addSublayer:_blackLayer];
         _blackLayer.mask = _maskLayer;
+        
+        _showShadow = YES;
     }
     return self;
 }
@@ -166,6 +170,11 @@
 
 #pragma mark - setters
 
+- (void)setShowShadow:(BOOL)showShadow
+{
+    _shadowImageView.hidden = !(_showShadow = showShadow);
+}
+
 - (void)setContentFullScreen:(BOOL)contentFullScreen
 {
     _contentFullScreen = contentFullScreen;
@@ -210,6 +219,9 @@
 - (void)setTitles:(NSArray *)titles animated:(BOOL)animated
 {
     int count = [_titles count];
+    if (_index > count) {
+        _index = count - 1;
+    }
     _titles = titles;
     if (animated) {
         //set animation here.
@@ -268,6 +280,7 @@
         _shadowImageView = [[UIImageView alloc] initWithFrame:
                             CGRectMake(frame.origin.x, frame.origin.y+frame.size.height,
                                        frame.size.width, 3)];
+        _shadowImageView.hidden = !_showShadow;
         [self insertSubview:_shadowImageView
                belowSubview:_titleScrollView];
     }
@@ -280,6 +293,8 @@
     CGRect frame = self.frame;
     
     if (_contentFullScreen) {
+        _contentView.frame = self.bounds;
+    }else {
         _contentView.frame = CGRectMake(0, _headerHeight, frame.size.width, 
                                         frame.size.height - _headerHeight);
     }
@@ -498,19 +513,39 @@
     CATransition *animation = [CATransition animation];
     [_contentView.layer addAnimation:animation
                               forKey:@""];
-    [_leftView removeFromSuperview];
-    _leftView = nil;
-    [_rightView removeFromSuperview];
-    _rightView = nil;
-    [_nowView removeFromSuperview];
     
     CGRect rect = _contentView.bounds;
-    _nowView = [_delegate contentView:self contentAtIndex:_index];
+    UIView *nowView = [_delegate contentView:self contentAtIndex:_index];
+    
+    if (nowView == _leftView) {
+        _nowView = _leftView;
+        goto flag1;
+    }else {
+        [_leftView removeFromSuperview];
+        _leftView = nil;
+    }
+    if (nowView == _rightView) {
+        _nowView = _rightView;
+        goto flag1;
+    }else {
+        [_rightView removeFromSuperview];
+        _rightView = nil;
+    }
+    if (nowView == _nowView) {
+        goto flag1;
+    }else {
+        [_nowView removeFromSuperview];
+    }
+    
+    _nowView = nowView;
+    [_contentView addSubview:_nowView];
+    
+flag1:
+    
     if ([_delegate respondsToSelector:@selector(contentView:willRollToIndex:)]) {
         [_delegate contentView:self willRollToIndex:_index];
     }
     _nowView.frame = (CGRect){0,0,rect.size};
-    [_contentView addSubview:_nowView];
 }
 
 - (void)_checkBeside
@@ -571,7 +606,7 @@
          } completion:^(BOOL finished) 
          {
              [self _showAtPage];
-             [self _checkBeside];
+             //[self _checkBeside];
          }];
     }else {
         [self turnBack];
@@ -592,7 +627,7 @@
          } completion:^(BOOL finished) 
          {
              [self _showAtPage];
-             [self _checkBeside];
+             //[self _checkBeside];
          }];
     }else {
         [self turnBack];
